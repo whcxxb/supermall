@@ -32,7 +32,6 @@ body {
   -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap是点击，highlight是背景高亮，color颜色，颜色用数值调节 */
   background: var(--color-background);
   width: 100vw;
-  color: red;
 }
 
 a {
