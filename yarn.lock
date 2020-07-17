@@ -1606,7 +1606,7 @@ aws4@^1.8.0:
 
 axion@^0.1.0:
   version "0.1.0"
-  resolved "https://registry.npm.taobao.org/axion/download/axion-0.1.0.tgz#5413b420f916dab89c8e7329d40eb78a0b8838a4"
+  resolved "https://registry.yarnpkg.com/axion/-/axion-0.1.0.tgz#5413b420f916dab89c8e7329d40eb78a0b8838a4"
   integrity sha1-VBO0IPkW2ricjnMp1A63iguIOKQ=
 
 axios@^0.19.2:
