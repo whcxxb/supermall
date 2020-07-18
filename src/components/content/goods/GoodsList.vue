@@ -1,18 +1,22 @@
 <template>
   <div class="goods">
-    <ul>
-      <li>hhah</li>
-      <li>hhah</li>
-      <li>hhah</li>
-      <li>hhah</li>
-      <li>hhah</li>
-      <li>hhah</li>
-    </ul>
+    <goodslistitem v-for="(item,index) in goods" :key="index" :goodsitem="item" />
   </div>
 </template>
 
 <script>
+import goodslistitem from "./GoodListItem"
 export default {
-  
+  components:{
+    goodslistitem
+  },
+  props:{
+    goods:{
+      type:Array,
+      default(){
+        return []
+      }
+    }
+  }
 }
 </script>

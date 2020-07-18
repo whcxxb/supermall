@@ -5,7 +5,7 @@
    <recommendview :recommend="recommend"></recommendview>
    <featuerview></featuerview>
    <tabcontrol :titles="['流行','新款','精选']" class="tab-control"></tabcontrol>
-   <goodslist />
+   <goodslist :goods="goods['pop'].list" />
   </div>
 </template>
 
@@ -82,7 +82,8 @@ export default {
     height: 3000px;
   }
   .tab-control{
-    position: sticky;
+    /* 在父组件设置子组件的css 防止复用 */
+    position: sticky; 
     top: 44px;
   }
 </style>
