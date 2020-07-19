@@ -47,6 +47,10 @@ export default {
     white-space: nowrap;
     margin-bottom: 3px;
   }
+  .goods-info .price{
+    color: hotpink;
+    margin-right: 20px;
+  }
   .goods-info .collect {
     position: relative;
   }

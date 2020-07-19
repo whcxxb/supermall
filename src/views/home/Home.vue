@@ -4,8 +4,8 @@
    <swiper :banners='banners'></swiper>
    <recommendview :recommend="recommend"></recommendview>
    <featuerview></featuerview>
-   <tabcontrol :titles="['流行','新款','精选']" class="tab-control"></tabcontrol>
-   <goodslist :goods="goods['pop'].list" />
+   <tabcontrol :titles="['流行','新款','精选']" class="tab-control" @tabclick="tabclick"></tabcontrol>
+   <goodslist :goods="showgoods" />
   </div>
 </template>
 
@@ -37,7 +37,13 @@ export default {
         'pop':{page:0,list:[]},
         'new':{page:0,list:[]},
         'sell':{page:0,list:[]},
-      }
+      },
+      currentType:'pop'
+    }
+  },
+  computed: {
+    showgoods(){
+      return this.goods[this.currentType].list
     }
   },
   created(){
@@ -49,6 +55,16 @@ export default {
     this.gethomegoods('sell')
   },
   methods: {
+    tabclick(index){
+      //  if(index === 1){
+      //    this.currentType = 'new'
+      //  }else if(index === 2){
+      //    this.currentType ='sell'
+      //  }else{
+      //    this.currentType = 'pop'
+      //  }
+      index === 0 ? this.currentType = 'pop' : (index === 1 ? this.currentType = 'new' : this.currentType ='sell')
+    },
     homedata(){
       homedata().then(res =>{
       this.banners = res.data.banner.list;
@@ -85,5 +101,6 @@ export default {
     /* 在父组件设置子组件的css 防止复用 */
     position: sticky; 
     top: 44px;
+    z-index: 9;
   }
 </style>
