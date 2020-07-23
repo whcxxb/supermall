@@ -1,11 +1,17 @@
 <template>
   <div id="home">
    <navbar class="home-nav"><div slot="center">购物街</div></navbar>
+
+   <scroll class="content" ref="scroll" :probe-type='3' @scroll="contentScroll" :pullUpLoad="true" @pullingUp="loadup">
    <swiper :banners='banners'></swiper>
    <recommendview :recommend="recommend"></recommendview>
    <featuerview></featuerview>
    <tabcontrol :titles="['流行','新款','精选']" class="tab-control" @tabclick="tabclick"></tabcontrol>
    <goodslist :goods="showgoods" />
+   </scroll>
+ 
+    <!-- 监听原生组件的点击事件 -->
+   <backtop @click.native="backclick" v-show="isShow"></backtop>
   </div>
 </template>
 
@@ -16,7 +22,8 @@ import recommendview from "./childcomps/RecommendView"
 import featuerview from "./childcomps/FeatuerView"
 import tabcontrol from "../../components/content/tabcontrol/TabControl"
 import goodslist from "../../components/content/goods/GoodsList"
-
+import backtop from "components/content/backtop/backtop"
+import scroll from "../../components/common/scroll/Scroll"
 
 import {homedata,gethomegoods} from "../../network/home"
 export default {
@@ -26,7 +33,9 @@ export default {
      recommendview,
      featuerview,
      tabcontrol,
-     goodslist
+     goodslist,
+     scroll,
+     backtop
   },
   data() {
     return {
@@ -38,7 +47,8 @@ export default {
         'new':{page:0,list:[]},
         'sell':{page:0,list:[]},
       },
-      currentType:'pop'
+      currentType:'pop',
+      isShow:false
     }
   },
   computed: {
@@ -55,6 +65,21 @@ export default {
     this.gethomegoods('sell')
   },
   methods: {
+    loadup(){
+      //如果没有加this   gethomegoods 就是网络组件的方法 没有page
+      this.gethomegoods(this.currentType)
+      
+      //刷新可滚动区域
+      this.$refs.scroll.scroll.refresh()
+    },
+    backclick(){
+      //回到顶部实现 拿到scroll组件 
+      this.$refs.scroll.scrollTo(0,0,)
+    },
+    contentScroll(position){
+      this.isShow = -position.y > 1000
+      // console.log(position);
+    },
     tabclick(index){
       //  if(index === 1){
       //    this.currentType = 'new'
@@ -76,13 +101,15 @@ export default {
       gethomegoods(type,page).then(res =>{
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
+
+        this.$refs.scroll.scroll.finishPullUp()
     })
     }
   },
 }
 </script>
 
-<style>
+<style scoped>
   .home-nav{
     background-color: var(--color-tint);
     color: #fff;
@@ -95,12 +122,22 @@ export default {
   }
   #home{
     padding-top: 44px;
-    height: 3000px;
+    height: 100vh;
+    position: relative;
   }
   .tab-control{
     /* 在父组件设置子组件的css 防止复用 */
     position: sticky; 
     top: 44px;
     z-index: 9;
+  }
+  .content{
+    
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    right: 0;
+    left: 0;
   }
 </style>
