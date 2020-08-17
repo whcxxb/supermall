@@ -27,6 +27,9 @@ export default {
   methods: {
     scrollTo(x,y,tim=300){
       this.scroll.scrollTo(x,y,tim)
+    },
+    refresh(){
+      this.scroll.refresh()
     }
   },
   mounted() {
@@ -39,10 +42,14 @@ export default {
      this.scroll.on('scroll',(position)=>{
        this.$emit('scroll',position)
      })
-      //监听上拉事件
+
+    if(this.pullUpLoad){
+          // 监听下拉事件
      this.scroll.on('pullingUp',()=>{
       this.$emit('pullingUp')
+      // console.log('加载到底部');
      })
+    }
   },
 }
 </script>

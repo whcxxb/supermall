@@ -6,10 +6,13 @@ const originalPush = Router.prototype.push
 }
 Vue.use(Router)
 
+
+//路由懒加载
 const Home = ()=>import("views/home/Home")
 const Cart = ()=>import("views/cart/Cart")
 const Category = ()=>import("views/category/Category")
 const Profile = ()=>import("views/profile/Profile")
+const Detail = ()=>import("views/detail/Detail")
 const router = new Router({
   routes:[
     {
@@ -31,6 +34,10 @@ const router = new Router({
     {
       path:'/profile',
       component:Profile
+    },
+    {
+      path:'/detail',
+      component:Detail
     },
   ],
   mode:"history"
